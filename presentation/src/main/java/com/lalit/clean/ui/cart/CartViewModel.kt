@@ -1,7 +1,5 @@
 package com.lalit.clean.ui.cart
 
-import androidx.annotation.VisibleForTesting
-import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lalit.clean.domain.entities.ProductEntity
@@ -41,8 +39,7 @@ class CartViewModel @Inject constructor(private val cartUseCase: CartUseCase) : 
         }
     }
 
-    @VisibleForTesting(otherwise = PRIVATE)
-    fun initCartState(state: ResultUiState) {
+    private fun initCartState(state: ResultUiState) {
         _cartState.update { state }
     }
 }

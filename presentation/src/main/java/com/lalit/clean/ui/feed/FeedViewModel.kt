@@ -1,7 +1,5 @@
 package com.lalit.clean.ui.feed
 
-import androidx.annotation.VisibleForTesting
-import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lalit.clean.domain.entities.ProductEntity
@@ -44,8 +42,7 @@ class FeedViewModel @Inject constructor(private val productUseCase: ProductUseCa
         }
     }
 
-    @VisibleForTesting(otherwise = PRIVATE)
-    fun initProductState(state: ResultUiState) {
+    private fun initProductState(state: ResultUiState) {
         _resultUiState.update { state }
     }
 }
