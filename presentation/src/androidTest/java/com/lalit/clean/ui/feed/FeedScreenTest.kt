@@ -2,22 +2,21 @@ package com.lalit.clean.ui.feed
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import androidx.navigation.compose.rememberNavController
-import com.lalit.clean.domain.entities.ProductEntity
-import com.lalit.clean.domain.repository.ProductRepository
-import com.lalit.clean.domain.usecase.ProductUseCase
-import com.lalit.clean.domain.util.Result
+import androidx.compose.ui.test.performClick
+import com.lalit.clean.productEntityList
 import com.lalit.clean.ui.feed.state.ResultUiState
 import com.lalit.clean.ui.graph.RootRouter
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceTimeBy
-import kotlinx.coroutines.test.advanceUntilIdle
-import kotlinx.coroutines.test.runTest
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.junit4.MockKRule
+import io.mockk.justRun
+import io.mockk.mockk
+import io.mockk.verify
+import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -26,113 +25,114 @@ import java.lang.Exception
 /**
  * FeedScreenTest is a test class that checks the functionality of feed screen features.
  */
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 class FeedScreenTest {
-    @get:Rule(order = 0)
+
+    @get:Rule
     val hiltRule = HiltAndroidRule(this)
 
-    @get:Rule(order = 1)
+    @get:Rule
     val composeTestRule = createComposeRule()
+
+    @get:Rule
+    val mockkRule = MockKRule(this)
+
+    @MockK
+    private lateinit var viewModel: FeedViewModel
+
+    private lateinit var rootRouter: RootRouter
 
     @Before
     fun setUp() {
         hiltRule.inject()
+
+        // Initialize Mockk mocks for the dependencies
+        // Relaxed mock for RootRouter to avoid unnecessary stubbing
+        rootRouter = mockk(relaxed = true)
     }
 
     @Test
-    fun testFeedScreen_DisplayedCorrectly() = runTest {
-        val expectedListOfProducts = listOf(productEntityData, productEntityData)
+    fun testLoadingState() {
+        justRun { viewModel.fetchProducts(any()) }
 
-        val productRepository = productRepository(expectedListOfProducts)
-
-        initFeedScreen(productRepository)
-
-        advanceUntilIdle()
-        advanceTimeBy(1000)
-
-        composeTestRule.onAllNodesWithText("category")[0].assertIsDisplayed()
-        composeTestRule.onAllNodesWithText("category")[1].assertIsDisplayed()
-        composeTestRule.onAllNodesWithText("title")[0].assertIsDisplayed()
-        composeTestRule.onAllNodesWithText("title")[1].assertIsDisplayed()
-    }
+        // Simulate the loading state in the viewModel
+        every { viewModel.resultUiState } returns MutableStateFlow(ResultUiState.Loading)
 
 
-    @Test
-    fun testFeedScreen_LoadingState() = runTest {
-        val expectedListOfProducts = listOf(productEntityData)
-
-        val productRepository = productRepository(expectedListOfProducts)
-        val viewModel = FeedViewModel(ProductUseCase(productRepository))
+        // Set the Composable content in the test environment
         composeTestRule.setContent {
-            FeedScreen(
-                rootRouter = RootRouter(mainNavController = rememberNavController()),
-                viewModel = viewModel
-            )
+            FeedScreen(rootRouter = rootRouter, viewModel = viewModel)
         }
-        viewModel.initProductState(ResultUiState.Loading)
 
-        advanceUntilIdle()
-        advanceTimeBy(1000)
-
-        // Check for the existence of a loading indicator
+        // Verify that the loading view is displayed
         composeTestRule.onNodeWithTag("ProgressView").assertIsDisplayed()
     }
 
     @Test
-    fun testFeedScreen_ErrorState() = runTest {
-        val errorMessage = "Network Error"
+    fun testSuccessState() {
+        // Given a successful response with a list of products
+        val products = productEntityList
 
-        val productRepository = object : ProductRepository {
-            override suspend fun getProducts(isForceRefresh: Boolean): Result<List<ProductEntity>> {
-                return Result.Error(Exception(errorMessage))
-            }
+        justRun { viewModel.fetchProducts(any()) }
 
-            override suspend fun getProduct(productId: Int): Result<ProductEntity> {
-                return Result.Error(Exception(errorMessage))
-            }
+        // Simulate the success state in the viewModel
+        every { viewModel.resultUiState } returns MutableStateFlow(ResultUiState.Success(products))
 
-        }
-
-        initFeedScreen(productRepository)
-
-        advanceUntilIdle()
-        advanceTimeBy(1000)
-        composeTestRule.onNodeWithText(errorMessage).assertIsDisplayed()
-    }
-
-    private fun initFeedScreen(productRepository: ProductRepository) {
-        val viewModel = FeedViewModel(ProductUseCase(productRepository))
+        // Set the Composable content in the test environment
         composeTestRule.setContent {
-            FeedScreen(
-                rootRouter = RootRouter(mainNavController = rememberNavController()),
-                viewModel = viewModel
-            )
+            FeedScreen(rootRouter = rootRouter, viewModel = viewModel)
+        }
+
+        // Verify that the product list is displayed
+        products.forEach { product ->
+            composeTestRule.onNodeWithText(product.title).assertIsDisplayed()
         }
     }
 
-    val productEntityData: ProductEntity
-        get() = ProductEntity(
-            category = "category",
-            description = "description",
-            id = 1,
-            thumbnail = "image",
-            price = 10.0,
-            title = "title"
-        )
+    @Test
+    fun testErrorState() {
+        // Given an error state
+        val error = Exception("An error occurred")
 
-    private fun productRepository(expectedListOfProducts: List<ProductEntity>): ProductRepository {
-        val productRepository = object : ProductRepository {
-            override suspend fun getProducts(isForceRefresh: Boolean): Result<List<ProductEntity>> {
-                return Result.Success(expectedListOfProducts)
-            }
+        justRun { viewModel.fetchProducts(any()) }
 
-            override suspend fun getProduct(productId: Int): Result<ProductEntity> {
-                return Result.Success(expectedListOfProducts.first())
-            }
+        // Simulate the error state in the viewModel
+        every { viewModel.resultUiState } returns MutableStateFlow(ResultUiState.Error(error))
 
+        // Set the Composable content in the test environment
+        composeTestRule.setContent {
+            FeedScreen(rootRouter = rootRouter, viewModel = viewModel)
         }
-        return productRepository
+
+        // Verify that the error message is displayed
+        composeTestRule.onNodeWithText("An error occurred").assertIsDisplayed()
+
+        // Verify the retry button is displayed
+        composeTestRule.onNodeWithText("Retry").assertIsDisplayed()
     }
 
+    @Test
+    fun testRetryOnError() {
+        // Given an error state with a retry action
+        val error = Exception("An error occurred")
+
+        justRun { viewModel.fetchProducts(any()) }
+
+        // Simulate the error state in the viewModel
+        every { viewModel.resultUiState } returns MutableStateFlow(ResultUiState.Error(error))
+
+        // Set the Composable content in the test environment
+        composeTestRule.setContent {
+            FeedScreen(rootRouter = rootRouter, viewModel = viewModel)
+        }
+
+        // Verify the retry button is displayed
+        composeTestRule.onNodeWithText("Retry").assertIsDisplayed()
+
+        // Simulate the retry button click
+        composeTestRule.onNodeWithText("Retry").performClick()
+
+        // Verify that the retry method was invoked on the viewModel
+        verify { viewModel.fetchProducts(true) }
+    }
 }

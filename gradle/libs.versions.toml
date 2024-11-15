@@ -72,13 +72,14 @@ kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
-# UniTest
+# Unit Test
 junit = { module = "junit:junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "androidxCore" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
+mockk-agent= { module = "io.mockk:mockk-agent", version.ref = "mockk" }
 hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltDagger" }
 
 

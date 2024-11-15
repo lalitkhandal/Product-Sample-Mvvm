@@ -35,5 +35,6 @@ dependencies {
     api(libs.junit)
     api(libs.kotlinx.coroutines)
     api(libs.androidx.core.testing)
-    api(libs.mockk)
+    api(libs.mockk.android)
+    api(libs.mockk.agent)
 }
