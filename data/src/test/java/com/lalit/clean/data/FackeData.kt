@@ -4,25 +4,25 @@ import com.lalit.clean.data.entities.ProductData
 import com.lalit.clean.data.entities.ProductDataItem
 import com.lalit.clean.domain.entities.ProductEntity
 
-val mockProduct = ProductDataItem(
-    category = "category",
-    description = "description",
+val mockProductDataItem = ProductDataItem(
     id = 1,
-    thumbnail = "image",
-    price = 10.0,
-    rating = 5.0,
-    title = "title",
+    title = "Product 1",
+    description = "Description 1",
+    category = "Category 1",
+    price = 10.99,
+    thumbnail = "thumb_1.jpg",
+    rating = 5.99
 )
 
 val mockProductEntity = ProductEntity(
-    category = "category",
-    description = "description",
     id = 1,
-    thumbnail = "image",
-    price = 10.0,
-    title = "title"
+    title = "Product 1",
+    description = "Description 1",
+    category = "Category 1",
+    price = 10.99,
+    thumbnail = "thumb_1.jpg"
 )
 
-val mockProductData = ProductData(products = listOf(mockProduct), 1, 0, 1)
+val mockProductData = ProductData(products = listOf(mockProductDataItem), 1, 0, 1)
 
 val mockProductEntityList = listOf(mockProductEntity)

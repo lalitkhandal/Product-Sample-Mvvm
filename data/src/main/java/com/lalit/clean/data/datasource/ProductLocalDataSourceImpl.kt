@@ -1,6 +1,7 @@
 package com.lalit.clean.data.datasource
 
 import com.lalit.clean.data.db.dao.ProductDao
+import com.lalit.clean.data.exception.NoDataFoundException
 import com.lalit.clean.data.mapper.toDomain
 import com.lalit.clean.data.mapper.toProductDb
 import com.lalit.clean.domain.entities.ProductEntity
@@ -17,7 +18,7 @@ class ProductLocalDataSourceImpl(private val productDao: ProductDao) : ProductDa
         return if (products.isNotEmpty()) {
             Result.Success(products.toDomain())
         } else {
-            Result.Error(Exception("Data Not Available"))
+            Result.Error(NoDataFoundException())
         }
     }
 
@@ -26,7 +27,7 @@ class ProductLocalDataSourceImpl(private val productDao: ProductDao) : ProductDa
         return if (product != null) {
             Result.Success(product.toDomain())
         } else {
-            Result.Error(Exception("Data Not Available"))
+            Result.Error(NoDataFoundException())
         }
     }
 
