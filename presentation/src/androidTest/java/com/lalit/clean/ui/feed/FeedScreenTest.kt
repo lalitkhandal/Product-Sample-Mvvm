@@ -11,8 +11,6 @@ import com.lalit.clean.ui.graph.RootRouter
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
-import io.mockk.junit4.MockKRule
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify
@@ -34,30 +32,28 @@ class FeedScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    @get:Rule
-    val mockkRule = MockKRule(this)
-
-    @MockK
     private lateinit var viewModel: FeedViewModel
-
     private lateinit var rootRouter: RootRouter
+
+    private val mockResultUiState = MutableStateFlow<ResultUiState>(ResultUiState.Loading)
 
     @Before
     fun setUp() {
         hiltRule.inject()
 
-        // Initialize Mockk mocks for the dependencies
         // Relaxed mock for RootRouter to avoid unnecessary stubbing
         rootRouter = mockk(relaxed = true)
+        viewModel = mockk(relaxed = true)
+
+        // Mock the resultUiState to return a MutableStateFlow
+        every { viewModel.resultUiState } returns mockResultUiState
+        justRun { viewModel.fetchProducts(any()) }
     }
 
     @Test
     fun testLoadingState() {
-        justRun { viewModel.fetchProducts(any()) }
-
         // Simulate the loading state in the viewModel
-        every { viewModel.resultUiState } returns MutableStateFlow(ResultUiState.Loading)
-
+        mockResultUiState.value =  ResultUiState.Loading
 
         // Set the Composable content in the test environment
         composeTestRule.setContent {
@@ -73,10 +69,8 @@ class FeedScreenTest {
         // Given a successful response with a list of products
         val products = productEntityList
 
-        justRun { viewModel.fetchProducts(any()) }
-
         // Simulate the success state in the viewModel
-        every { viewModel.resultUiState } returns MutableStateFlow(ResultUiState.Success(products))
+        mockResultUiState.value =  ResultUiState.Success(products)
 
         // Set the Composable content in the test environment
         composeTestRule.setContent {
@@ -94,10 +88,8 @@ class FeedScreenTest {
         // Given an error state
         val error = Exception("An error occurred")
 
-        justRun { viewModel.fetchProducts(any()) }
-
         // Simulate the error state in the viewModel
-        every { viewModel.resultUiState } returns MutableStateFlow(ResultUiState.Error(error))
+        mockResultUiState.value =  ResultUiState.Error(error)
 
         // Set the Composable content in the test environment
         composeTestRule.setContent {
@@ -116,10 +108,8 @@ class FeedScreenTest {
         // Given an error state with a retry action
         val error = Exception("An error occurred")
 
-        justRun { viewModel.fetchProducts(any()) }
-
         // Simulate the error state in the viewModel
-        every { viewModel.resultUiState } returns MutableStateFlow(ResultUiState.Error(error))
+        mockResultUiState.value =  ResultUiState.Error(error)
 
         // Set the Composable content in the test environment
         composeTestRule.setContent {

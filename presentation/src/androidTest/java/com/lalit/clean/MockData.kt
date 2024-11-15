@@ -13,3 +13,12 @@ val productEntityList = List(4) {
         thumbnail = "thumb${it + 1}.jpg"
     )
 }
+
+val productEntity = ProductEntity(
+    id = 1,
+    title = "Test Product",
+    description = "Test Description",
+    category = "Test Category",
+    price = 99.99,
+    thumbnail = "https://example.com/thumbnail.jpg"
+)
