@@ -5,6 +5,7 @@ import com.lalit.clean.data.mockProductEntityList
 import com.lalit.clean.domain.util.Result
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
+import io.mockk.coJustRun
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.CoreMatchers.instanceOf
@@ -36,8 +37,8 @@ class ProductRepositoryImplTest {
     fun `test when getProducts is called and api return success if local data not available`() =
         runTest {
             coEvery { localDataSource.getProducts() } returns Result.Error(Exception("Error"))
-            coEvery { localDataSource.saveProducts(any()) } returns Unit
-            coEvery { localDataSource.clearProducts() } returns Unit
+            coJustRun { localDataSource.saveProducts(any()) }
+            coJustRun { localDataSource.clearProducts() }
             coEvery { remoteDataSource.getProducts() } returns Result.Success(mockProductEntityList)
 
             val result = productRepositoryImpl.getProducts(true)

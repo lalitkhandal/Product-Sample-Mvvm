@@ -5,6 +5,7 @@ import com.lalit.clean.data.db.entities.CartDbEntity
 import com.lalit.clean.data.mapper.toDomain
 import com.lalit.clean.domain.util.Result
 import io.mockk.coEvery
+import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -53,7 +54,7 @@ class ProductCartDataSourceImplTest {
     fun `test saveCartProduct calls saveCartProduct on cartDao`() = runTest {
         val cartDbEntity = getCartDbEntity(1, 10).toDomain()
 
-        coEvery { cartDao.saveCartProduct(any()) } returns Unit
+        coJustRun { cartDao.saveCartProduct(any()) }
         coEvery { cartDao.getCartProduct(any()) } returns null
 
         productCartDataSourceImpl.saveCartProduct(cartDbEntity)
@@ -65,9 +66,9 @@ class ProductCartDataSourceImplTest {
     @Test
     fun `test saveCartProduct calls updateCartProduct on cartDao`() = runTest {
         val cartDbEntity = getCartDbEntity(1, 10)
-        coEvery { cartDao.saveCartProduct(any()) } returns Unit
+        coJustRun { cartDao.saveCartProduct(any()) }
         coEvery { cartDao.getCartProduct(any()) } returns cartDbEntity
-        coEvery { cartDao.updateCartProduct(any(), any()) } returns Unit
+        coJustRun { cartDao.updateCartProduct(any(), any()) }
 
         productCartDataSourceImpl.saveCartProduct(cartDbEntity.toDomain())
         coVerify { cartDao.getCartProduct(any()) }
@@ -76,7 +77,7 @@ class ProductCartDataSourceImplTest {
 
     @Test
     fun `test removeCartProduct calls removeCartProduct on cartDao`() = runTest {
-        coEvery { cartDao.removeCartProduct(any()) } returns Unit
+        coJustRun { cartDao.removeCartProduct(any()) }
         productCartDataSourceImpl.removeCartProduct(1)
         coVerify { cartDao.removeCartProduct(any()) }
     }

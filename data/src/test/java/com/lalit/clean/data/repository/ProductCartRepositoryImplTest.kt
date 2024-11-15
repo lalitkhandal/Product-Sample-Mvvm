@@ -6,6 +6,7 @@ import com.lalit.clean.data.mockProductEntityList
 import com.lalit.clean.domain.repository.ProductCartRepository
 import com.lalit.clean.domain.util.Result
 import io.mockk.coEvery
+import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -50,7 +51,7 @@ class ProductCartRepositoryImplTest {
         val product = mockProductEntity
 
         // Mock the behavior of saveCartProduct
-        coEvery { productCartDataSource.saveCartProduct(product) } returns Unit
+        coJustRun { productCartDataSource.saveCartProduct(product) }
 
         // When
         productCartRepository.saveCartProduct(product)
@@ -64,7 +65,7 @@ class ProductCartRepositoryImplTest {
         // Given
         val productId = Random.nextInt()
         // Mock the behavior of saveCartProduct
-        coEvery { productCartDataSource.removeCartProduct(productId) } returns Unit
+        coJustRun { productCartDataSource.removeCartProduct(productId) }
 
         // When
         productCartRepository.removeCartProduct(productId)

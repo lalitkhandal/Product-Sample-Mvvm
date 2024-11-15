@@ -6,6 +6,7 @@ import com.lalit.clean.data.exception.NoDataFoundException
 import com.lalit.clean.data.mapper.toDomain
 import com.lalit.clean.domain.util.Result
 import io.mockk.coEvery
+import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -70,14 +71,14 @@ class ProductLocalDataSourceImplTest {
     @Test
     fun `test saveProducts calls saveProducts on productDao`() = runTest {
         val productEntity = getProductDbEntity(1).toDomain()
-        coEvery { productDao.saveProducts(any()) } returns Unit
+        coJustRun { productDao.saveProducts(any()) }
         productLocalDataSourceImpl.saveProducts(listOf(productEntity))
         coVerify { productDao.saveProducts(any()) }
     }
 
     @Test
     fun `test clearProducts calls clearAll on productDao`() = runTest {
-        coEvery { productDao.clearAll() } returns Unit
+        coJustRun { productDao.clearAll() }
         productLocalDataSourceImpl.clearProducts()
         coVerify { productDao.clearAll() }
     }
