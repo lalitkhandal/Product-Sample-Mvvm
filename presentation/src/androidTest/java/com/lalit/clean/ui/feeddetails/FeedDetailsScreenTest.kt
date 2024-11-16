@@ -7,10 +7,12 @@ import com.lalit.clean.productEntity
 import com.lalit.clean.ui.feed.state.ResultUiState
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import io.mockk.*
+import io.mockk.every
+import io.mockk.justRun
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
@@ -57,7 +59,6 @@ class FeedDetailsScreenTest {
         composeTestRule.onNodeWithTag("ProgressView").assertIsDisplayed()
     }
 
-    @Ignore("Need to fix")
     @Test
     fun testSuccessState() {
         // Given a successful response with a product entity
@@ -78,10 +79,10 @@ class FeedDetailsScreenTest {
         composeTestRule.onNodeWithText("Test Product").assertIsDisplayed()
         composeTestRule.onNodeWithText("Test Description").assertIsDisplayed()
         composeTestRule.onNodeWithText("Test Category").assertIsDisplayed()
-        composeTestRule.onNodeWithText("99.99").assertIsDisplayed()
+        composeTestRule.onNodeWithText("₹ 99.99").assertIsDisplayed()
 
         // Verify Add to Cart button is displayed
-        composeTestRule.onNodeWithText("Add to Cart").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Add to cart").assertIsDisplayed()
     }
 
     @Test
@@ -104,7 +105,6 @@ class FeedDetailsScreenTest {
         composeTestRule.onNodeWithText("Retry").assertIsDisplayed()
     }
 
-    @Ignore("Need to fix")
     @Test
     fun testAddToCart() {
         // Given a successful response with a product entity
@@ -119,15 +119,13 @@ class FeedDetailsScreenTest {
         }
 
         // Wait for the UI to be idle (to handle animations like AnimatedVisibility)
-        composeTestRule.waitUntil(5000) {
-            // Ensure the "Add to Cart" button is displayed
-            composeTestRule.onNodeWithText("Add to cart").assertIsDisplayed()
+        composeTestRule.waitForIdle()
 
-            // Simulate click on Add to Cart button
-            composeTestRule.onNodeWithText("Add to cart").performClick()
+        // Ensure the "Add to Cart" button is displayed
+        composeTestRule.onNodeWithText("Add to cart").assertIsDisplayed()
 
-            true
-        }
+        // Simulate click on Add to Cart button
+        composeTestRule.onNodeWithText("Add to cart").performClick()
 
         // Verify that the saveCartProduct function was called
         verify { viewModel.saveCartProduct(product, any()) }

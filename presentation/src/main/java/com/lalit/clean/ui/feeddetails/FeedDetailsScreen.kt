@@ -1,7 +1,5 @@
 package com.lalit.clean.ui.feeddetails
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -132,47 +130,35 @@ fun DetailsContent(data: ProductEntity, onAddToCart: (ProductEntity) -> Unit) {
                     .fillMaxWidth()
             )
 
-            AnimatedVisibility(visible = animationVisible, enter = fadeIn()) {
-                Text(
-                    text = data.title,
-                    style = AppTheme.typography.titleLarge,
-                    modifier = Modifier
-                        .padding(Dimension.Padding.padding16)
-                        .fillMaxWidth(),
-                )
-            }
+            Text(
+                text = data.title,
+                style = AppTheme.typography.titleLarge,
+                modifier = Modifier
+                    .padding(Dimension.Padding.padding16)
+                    .fillMaxWidth(),
+            )
 
-            AnimatedVisibility(visible = animationVisible) {
-                TextContent(data.description)
-            }
-
-            AnimatedVisibility(visible = animationVisible) {
-                TextContent(data.category)
-            }
-
-            AnimatedVisibility(visible = animationVisible) {
-                TextContent(stringResource(R.string.formatted_price, data.price))
-            }
+            TextContent(data.description)
+            TextContent(data.category)
+            TextContent(stringResource(R.string.formatted_price, data.price))
         }
 
-        AnimatedVisibility(visible = animationVisible) {
-            val addToCartClickable = debounced(onClick = {
-                onAddToCart(data)
-            })
-            Button(
-                onClick = addToCartClickable,
+        val addToCartClickable = debounced(onClick = {
+            onAddToCart(data)
+        })
+        Button(
+            onClick = addToCartClickable,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(Dimension.Padding.padding16)
+        ) {
+            Text(
+                text = stringResource(R.string.add_to_cart),
+                style = AppTheme.typography.labelLarge,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(Dimension.Padding.padding16)
-            ) {
-                Text(
-                    text = stringResource(R.string.add_to_cart),
-                    style = AppTheme.typography.labelLarge,
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.Center
-                )
-            }
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
