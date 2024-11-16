@@ -31,14 +31,14 @@ fun NavigationBarNestedGraph(
         startDestination = NavScreen.Feed,
         route = parentRoute
     ) {
-        composableWithSlideAnimation<NavScreen.Feed> { backStack ->
+        composableWithSlideAnimation<NavScreen.Feed> { _ ->
             val viewModel = hiltViewModel<FeedViewModel>()
             FeedScreen(
                 rootRouter = RootRouter(mainNavController),
                 viewModel = viewModel,
             )
         }
-        composableWithSlideAnimation<NavScreen.Cart> { backStack ->
+        composableWithSlideAnimation<NavScreen.Cart> { _ ->
             val viewModel = hiltViewModel<CartViewModel>()
             CartScreen(
                 rootRouter = RootRouter(mainNavController),

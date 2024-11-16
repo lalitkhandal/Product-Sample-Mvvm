@@ -11,6 +11,7 @@ import kotlin.jvm.java
  * This class is used in the build.gradle.kts for the presentation
  */
 //
+@Suppress("unused")
 class CustomTestRunner : AndroidJUnitRunner() {
     override fun newApplication(
         cl: ClassLoader?,

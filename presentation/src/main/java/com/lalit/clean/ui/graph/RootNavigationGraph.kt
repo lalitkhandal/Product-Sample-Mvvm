@@ -26,7 +26,7 @@ fun RootNavigationGraph(navHostController: NavHostController) {
         startDestination = NavScreen.BottomBar
     ) {
         // Bottom bar with Feed screen as a default one
-        composableWithSlideAnimation<NavScreen.BottomBar> { backStack ->
+        composableWithSlideAnimation<NavScreen.BottomBar> { _ ->
             val nestedNavController = rememberNavController()
             BottomBarScreen(nestedNavController) {
                 NavigationBarNestedGraph(
@@ -38,7 +38,7 @@ fun RootNavigationGraph(navHostController: NavHostController) {
         }
 
         // Feed details screen
-        composableWithSlideAnimation<NavScreen.FeedDetails> { backStack ->
+        composableWithSlideAnimation<NavScreen.FeedDetails> { _ ->
             val viewModel = hiltViewModel<FeedDetailsViewModel>()
             FeedDetailsScreen(rootNavController = navHostController, viewModel)
         }
