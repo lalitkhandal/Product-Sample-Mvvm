@@ -25,6 +25,9 @@ import org.junit.Rule
 import org.junit.Test
 import java.lang.Exception
 
+/**
+ * Unit test class for [FeedDetailsViewModel]
+ */
 @ExperimentalCoroutinesApi
 class FeedDetailsViewModelTest {
     @get:Rule

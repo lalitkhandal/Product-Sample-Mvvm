@@ -19,9 +19,11 @@ import com.lalit.clean.ui.theme.AppTheme
 @Composable
 fun ProgressView(modifier: Modifier = Modifier, alignment: Alignment = Alignment.Center) {
     Box(modifier = modifier.fillMaxSize()) {
-        CircularProgressIndicator(modifier = Modifier
-            .align(alignment)
-            .testTag("ProgressView"))
+        CircularProgressIndicator(
+            modifier = Modifier
+                .align(alignment)
+                .testTag("ProgressView")
+        )
     }
 } // End of function
 

@@ -9,7 +9,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 /**
- * Unit test class for [ProductMapper], responsible for testing the mapping functionality
+ * Unit test class for ProductMapper, responsible for testing the mapping functionality
  */
 class ProductMapperTest {
     // Test for `ProductData.toDomain()`

@@ -2,6 +2,9 @@ package com.lalit.clean.domain.usecase
 
 import com.lalit.clean.domain.entities.ProductEntity
 import com.lalit.clean.domain.repository.ProductCartRepository
+import com.lalit.clean.domain.util.Result
+import io.mockk.coEvery
+import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -9,10 +12,10 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import com.lalit.clean.domain.util.Result
-import io.mockk.coEvery
-import io.mockk.coJustRun
 
+/**
+ * Unit test class for [CartUseCase]
+ */
 class CartUseCaseTest {
 
     private lateinit var productCartRepository: ProductCartRepository

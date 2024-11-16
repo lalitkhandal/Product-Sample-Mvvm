@@ -85,7 +85,7 @@ object AppTheme {
         @Composable @ReadOnlyComposable get() = MaterialTheme.colorScheme
 
     /**
-     * Retrieves the current [FoodTypography] at the call site's position in the hierarchy.
+     * Retrieves the current [MaterialTheme.typography] at the call site's position in the hierarchy.
      */
     val typography: androidx.compose.material3.Typography
         @Composable @ReadOnlyComposable get() = MaterialTheme.typography

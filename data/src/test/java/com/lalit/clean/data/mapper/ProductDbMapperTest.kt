@@ -4,6 +4,9 @@ import com.lalit.clean.domain.entities.ProductEntity
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
+/**
+ * Unit test class for ProductDbMapper.kt, responsible for testing the mapping functionality
+ */
 class ProductDbMapperTest {
     @Test
     fun `test toProductDb transformation`() {

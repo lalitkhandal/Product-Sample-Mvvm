@@ -37,7 +37,7 @@ sealed class Result<T> {
  * An extension function on [Result] that allows executing a given [block] when the result is successful.
  *
  * @param block The block of code to execute if the result is a [Success].
- * @return The original [Result] object, either [Success] or [Failure].
+ * @return The original [Result] object, either [Success] or [Result.Error].
  */
 inline fun <T> Result<T>.onSuccess(
     block: (T) -> Unit
@@ -49,6 +49,7 @@ inline fun <T> Result<T>.onSuccess(
  * @param block The block of code to execute if the result is a [Result.Error].
  * @return The original [Result] object, either [Result.Success] or [Result.Error].
  */
+@Suppress("unused")
 inline fun <T> Result<T>.onError(
     block: (Exception) -> Unit
 ): Result<T> = if (this is Result.Error) also { block(error) } else this

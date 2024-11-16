@@ -53,7 +53,7 @@ class FeedScreenTest {
     @Test
     fun testLoadingState() {
         // Simulate the loading state in the viewModel
-        mockResultUiState.value =  ResultUiState.Loading
+        mockResultUiState.value = ResultUiState.Loading
 
         // Set the Composable content in the test environment
         composeTestRule.setContent {
@@ -70,7 +70,7 @@ class FeedScreenTest {
         val products = productEntityList
 
         // Simulate the success state in the viewModel
-        mockResultUiState.value =  ResultUiState.Success(products)
+        mockResultUiState.value = ResultUiState.Success(products)
 
         // Set the Composable content in the test environment
         composeTestRule.setContent {
@@ -89,7 +89,7 @@ class FeedScreenTest {
         val error = Exception("An error occurred")
 
         // Simulate the error state in the viewModel
-        mockResultUiState.value =  ResultUiState.Error(error)
+        mockResultUiState.value = ResultUiState.Error(error)
 
         // Set the Composable content in the test environment
         composeTestRule.setContent {
@@ -109,7 +109,7 @@ class FeedScreenTest {
         val error = Exception("An error occurred")
 
         // Simulate the error state in the viewModel
-        mockResultUiState.value =  ResultUiState.Error(error)
+        mockResultUiState.value = ResultUiState.Error(error)
 
         // Set the Composable content in the test environment
         composeTestRule.setContent {

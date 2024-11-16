@@ -25,10 +25,10 @@ fun RootNavigationGraph(navHostController: NavHostController) {
         route = Graph.Root::class,
         startDestination = NavScreen.BottomBar
     ) {
-        // Bottom bar with Feed details scree as a default one
+        // Bottom bar with Feed screen as a default one
         composableWithSlideAnimation<NavScreen.BottomBar> { backStack ->
             val nestedNavController = rememberNavController()
-            BottomBarScreen(rootRouter = RootRouter(navHostController), nestedNavController) {
+            BottomBarScreen(nestedNavController) {
                 NavigationBarNestedGraph(
                     navController = nestedNavController,
                     mainNavController = navHostController,

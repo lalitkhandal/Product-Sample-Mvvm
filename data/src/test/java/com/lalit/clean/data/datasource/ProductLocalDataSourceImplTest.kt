@@ -15,6 +15,9 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 
+/**
+ * Unit test class for [ProductLocalDataSourceImpl]
+ */
 class ProductLocalDataSourceImplTest {
     private val productDao: ProductDao = mockk()
     lateinit var productLocalDataSourceImpl: ProductLocalDataSourceImpl

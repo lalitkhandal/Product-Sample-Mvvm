@@ -22,6 +22,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * CartScreenTest is a test class that checks the functionality of cart screen features.
+ */
 @HiltAndroidTest
 class CartScreenTest {
 

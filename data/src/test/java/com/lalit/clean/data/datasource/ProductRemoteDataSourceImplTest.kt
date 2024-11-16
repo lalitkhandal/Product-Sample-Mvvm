@@ -11,6 +11,9 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 
+/**
+ * Unit test class for [ProductRemoteDataSourceImpl]
+ */
 class ProductRemoteDataSourceImplTest {
     private val productApi: ProductApi = mockk()
     lateinit var productRemoteDataSourceImpl: ProductRemoteDataSourceImpl

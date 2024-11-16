@@ -16,6 +16,9 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.random.Random
 
+/**
+ * Unit test class for [ProductCartRepositoryImpl]
+ */
 class ProductCartRepositoryImplTest {
     private lateinit var productCartDataSource: ProductCartDataSource
     private lateinit var productCartRepository: ProductCartRepository

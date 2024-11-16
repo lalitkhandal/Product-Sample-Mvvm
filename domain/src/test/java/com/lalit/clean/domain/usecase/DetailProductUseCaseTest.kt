@@ -13,6 +13,9 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.random.Random
 
+/**
+ * Unit test class for [DetailProductUseCase]
+ */
 class DetailProductUseCaseTest {
     private lateinit var productRepository: ProductRepository
     private lateinit var detailProductUseCase: DetailProductUseCase

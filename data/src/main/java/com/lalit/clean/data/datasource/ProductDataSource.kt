@@ -16,7 +16,7 @@ interface ProductDataSource {
     }
 
     /**
-     * Local data source interface for managing product data in local storage (e.g., database or cache).
+     * Local data source interface for managing product data in database
      */
     interface Local {
         suspend fun getProducts(): Result<List<ProductEntity>>

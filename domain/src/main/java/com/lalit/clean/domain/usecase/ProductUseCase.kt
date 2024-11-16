@@ -12,7 +12,7 @@ class ProductUseCase(private val productRepository: ProductRepository) {
     /**
      * Retrieves a list of products from the repository.
      * @param isForceRefresh A bool variable that inform repository to force the data from API
-     * @return A [Result] containing a list of [ProductEntity] on success, or an error on failure.
+     * @return A [Result] containing a list of ProductEntity on success, or an error on failure.
      */
     suspend fun getProducts(isForceRefresh: Boolean) = productRepository.getProducts(isForceRefresh)
 }

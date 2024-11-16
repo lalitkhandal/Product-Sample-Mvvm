@@ -1,6 +1,5 @@
 package com.lalit.clean.ui.component
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
@@ -22,40 +21,6 @@ import com.lalit.clean.R
 import com.lalit.clean.ui.theme.AppTheme
 import com.lalit.clean.ui.theme.Dimension
 
-
-/**
- * A composable function that creates a top app bar with a title, optional navigation icon,
- * and custom actions.
- *
- * @param modifier The [Modifier] to be applied to the top app bar for customization.
- * @param title The string resource ID for the title text displayed in the top app bar.
- * @param contentColor The color of the content in the top app bar. Default is the primary color.
- * @param isNavigationIcon A flag indicating whether to show the navigation icon. Default is `true`.
- * @param onNavigationIconClick A callback function triggered when the navigation icon is clicked. Default is an empty lambda.
- * @param actions A composable lambda that allows custom actions to be added to the top app bar.
- * @param colors The colors to be used for the top app bar, such as background and content colors. Default uses the app's theme.
- */
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-internal fun TopBar(
-    modifier: Modifier = Modifier,
-    @StringRes title: Int,
-    contentColor: Color = AppTheme.colorScheme.primary,
-    isNavigationIcon: Boolean = true,
-    onNavigationIconClick: () -> Unit = {},
-    actions: @Composable RowScope.() -> Unit = {},
-    colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors()
-) {
-    TopBar(
-        modifier = modifier,
-        title = stringResource(id = title),
-        contentColor = contentColor,
-        isNavigationIcon = isNavigationIcon,
-        onNavigationIconClick = onNavigationIconClick,
-        actions = actions,
-        colors = colors
-    )
-} // End of function
 
 /**
  * A composable function that creates a top app bar with a title, optional navigation icon,

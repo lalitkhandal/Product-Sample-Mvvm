@@ -12,7 +12,7 @@ class DetailProductUseCase(private val productRepository: ProductRepository) {
     /**
      * Retrieves a product from the repository.
      *
-     * @return A [Result] containing a  [ProductEntity] on success, or an error on failure.
+     * @return A [Result] containing a ProductEntity on success, or an error on failure.
      */
     suspend fun invoke(productId: Int) = productRepository.getProduct(productId)
 }

@@ -19,6 +19,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * Unit test class for [CartViewModel]
+ */
 @ExperimentalCoroutinesApi
 class CartViewModelTest {
     @get:Rule

@@ -14,6 +14,9 @@ import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * FeedDetailsScreenTest is a test class that checks the functionality of details screen feature.
+ */
 @HiltAndroidTest
 class FeedDetailsScreenTest {
 
@@ -137,7 +140,7 @@ class FeedDetailsScreenTest {
         every { navHostController.navigateUp() } returns true
 
         composeTestRule.setContent {
-            FeedDetailsScreen(rootNavController =navHostController, viewModel = viewModel)
+            FeedDetailsScreen(rootNavController = navHostController, viewModel = viewModel)
         }
 
         // Simulate click on back navigation

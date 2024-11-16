@@ -3,6 +3,9 @@ package com.lalit.clean.data.exception
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
+/**
+ * Unit test class for [NoDataFoundException]
+ */
 class NoDataFoundExceptionTest {
     @Test
     fun `test exception message`() {

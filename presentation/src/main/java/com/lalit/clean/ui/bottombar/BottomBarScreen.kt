@@ -13,20 +13,17 @@ import androidx.navigation.NavHostController
 import com.lalit.clean.R
 import com.lalit.clean.ui.component.BottomBar
 import com.lalit.clean.ui.component.TopBar
-import com.lalit.clean.ui.graph.RootRouter
 import com.lalit.clean.ui.navigation.route
 
 /**
  * Sets up a screen with a bottom navigation bar.
  *
- * @param rootRouter The [RootRouter] used for handling navigation and routing logic at the root level.
  * @param nestedNavController The [NavHostController] that handles the navigation for the nested screen content.
  * @param content A composable function representing the content of the screen. It will be displayed inside the screen layout.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomBarScreen(
-    rootRouter: RootRouter,
     nestedNavController: NavHostController,
     content: @Composable () -> Unit
 ) {

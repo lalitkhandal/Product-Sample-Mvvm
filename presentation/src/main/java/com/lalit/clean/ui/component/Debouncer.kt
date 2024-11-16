@@ -67,6 +67,7 @@ fun debounced(
  *     // Handle click action, only triggered once every 500 ms
  * })
  */
+@Suppress("unused")
 fun Modifier.debouncedClickable(
     debounceTime: Long = 1000L,
     onClick: () -> Unit
